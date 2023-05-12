@@ -14,7 +14,7 @@ class Api {
     return Promise.reject(res.status);
   }
 
-  /** универсальный метод запроса с проверкой ответа */
+  /** приватный метод - универсальный запрос с проверкой ответа */
   _request(endpoint, options) {
     return fetch(this._baseUrl + endpoint, options)
       .then(this._checkResponse)
@@ -30,24 +30,23 @@ class Api {
   }
 
   /** обновить информацию о пользователе */
-  updateUserInfo(newInfo) {
+  updateUserInfo({name, about}) {
     return this._request(`/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: newInfo.titleProfile,
-        about: newInfo.subtitleProfile
+        name, about
       })
     })
   }
 
   /** обновить аватар */
-  updateUserAvatar(newAvatar) {
+  updateUserAvatar({avatar}) {
     return this._request(`/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: newAvatar
+        avatar
       })
     })
   }
@@ -67,8 +66,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        link: link
+        name, link
       })
     })
   }
@@ -81,18 +79,11 @@ class Api {
     })
   }
 
-  /** отправить лайк на сервер */
-  putLike(cardId) {
+  /** поставить/удалить лайк на сервере */
+  changeLikeCardStatus(cardId, isLike) {
+    const currMethod = (isLike ? 'PUT' : 'DELETE');
     return this._request(`/cards/${cardId}/likes`, {
-      method: 'PUT',
-      headers: this._headers
-    })
-  }
-
-  /** удалить лайк на сервере */
-  deleteLike(cardId) {
-    return this._request(`/cards/${cardId}/likes`, {
-      method: 'DELETE',
+      method: currMethod,
       headers: this._headers
     })
   }
