@@ -12,8 +12,8 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
     setValues({name: currentUser.name, description: currentUser.about})
   }, [currentUser]);
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit(evt) {
+    evt.preventDefault();
     onUpdateUser({
       name: values.name,
       about: values.description,

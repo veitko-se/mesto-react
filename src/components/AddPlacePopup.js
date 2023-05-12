@@ -6,8 +6,8 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
 
   const {values, handleChange} = useForm({name: '', link: ''});
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit(evt) {
+    evt.preventDefault();
     onAddPlace({
       name: values.name,
       link: values.link,
