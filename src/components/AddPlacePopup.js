@@ -4,7 +4,11 @@ import useForm from '../hooks/useForm';
 
 function AddPlacePopup({isOpen, onClose, onAddPlace}) {
 
-  const {values, handleChange} = useForm({name: '', link: ''});
+  const {values, handleChange, setValues} = useForm({name: '', link: ''});
+
+  React.useEffect(() => {
+    setValues({name: '', link: ''})
+  }, [isOpen]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
